@@ -1,0 +1,49 @@
+*{
+    padding:0;
+    margin:0;
+    color:white;
+}
+  
+
+body {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    height: 100vh; /* Makes sure the container takes up the full height of the viewport */
+}
+form{
+    width:auto;
+    margin:10px;
+}
+#inputValue{
+    padding:8px;
+    border:solid 2px black;
+    color:#251818;
+    font-size: 16px;
+    font-weight: 700;
+    
+}
+.btn{
+    padding:8px;
+    border-radius: 4px;
+    color:white;
+    background-color: #aa1717;
+
+}
+.main-todo-list{
+    display:flex;
+    align-items: center;
+    flex-direction: row;
+    margin:10px;
+    /* background-color: aliceblue; */
+    justify-content: space-between;
+
+}
+.deletebtn{
+    padding:8px;
+    border-radius:20px;
+    color:white;
+    background-color: #1162c2;
+}

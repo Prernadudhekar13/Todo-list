@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    
+</head>
+<body>
+    <h1>Todo  List</h1>
+    <form>
+        <div>
+            <input type="text" id="inputValue"/>
+            <button class="btn">Add Todo</button>
+        </div>
+        <section class="todo-list-elem"></section>
+    </form>
+    <!-- i willtake the references -->
+    <script>
+        //References
+        const mainTodoElem = document.querySelector(".todo-list-elem");
+        const inputValue= document.getElementById("inputValue");
+       
+        
+        const getTodolist = ()=>{
+            
+            return  JSON.parse(localStorage.getItem("youtubeTodoList"));
+    
+        };
+         //to remove form local storage
+        const addTodoLocalStorage=(localTodolist)=>{
+            return localStorage.setItem("youtubeTodoList",JSON.stringify(localTodolist));
+        };
+        let localTodolist = [] ;
+        if(localStorage.getItem("youtubeTodoList")){
+            localTodolist = getTodolist();
+        }
+
+        
+
+
+        //addin data  tpo list dynamically
+        const addTodoDynamicElements=(currElem)=>{
+            const divElement = document.createElement("div");
+            divElement.classList.add("main-todo-list");
+            divElement.innerHTML = `<li>${currElem}</li> <button class = "deletebtn">Delete</button>`;
+            mainTodoElem.append(divElement);
+        }
+
+        
+        
+        const addTodoList =(e)=>{
+            e.preventDefault();
+            // sare space inputvalue is hta reh h
+            const todoListValue = inputValue.value.trim();
+            
+           //include fubnction is used to check if data is already present
+
+           inputValue.value ="";
+            // trim krne k bd push kro arry m
+
+            if(todoListValue !="" && !localTodolist.includes(todoListValue)){
+                localTodolist.push(todoListValue);
+                localTodolist =[...new Set(localTodolist)];
+                console.log(localTodolist);
+                // i will add the data to localstorage
+                localStorage.setItem("youtubeTodoList",JSON.stringify(localTodolist));
+
+                const divElement = document.createElement("div");
+                divElement.classList.add("main-todo-list");
+                divElement.innerHTML = `<li>${todoListValue}</li> <button class = "deletebtn">Delete</button>`;
+                mainTodoElem.append(divElement);
+            }
+        };
+
+        const showTodoList=()=>{
+            localTodolist.forEach((currElem)=>{
+                addTodoDynamicElements(currElem);
+            });
+        };
+
+        showTodoList();
+        //date apn phle dika reh h then delete krrhe h
+        const removeTodoElem =(currTodo) =>{
+            const todoremove = currTodo.target;
+            const todoListcontent = todoremove.previousElementSibling.innerText;
+            const parent = todoremove.parentElement;
+            //;\localtodolist sb data store h so usme jo todolistcontent k data
+            //ko chod kr baki sara add krdo
+
+            localTodolist= localTodolist.filter((curr)=>{
+                // console.log(curr);
+                return curr!= todoListcontent;
+            });
+
+            addTodoLocalStorage();
+            //after adding modify data to local storage 
+            parent.remove();
+        };
+
+
+        document.querySelector(".btn").addEventListener("click",(e)=>{
+            addTodoList(e);
+
+            // i have to store the values in arr
+
+        });
+
+        mainTodoElem.addEventListener("click",(e)=>{
+            //remove default
+            e.preventDefault();
+            if(e.target.classList.contains("deletebtn")){
+                removeTodoElem(e);
+            }
+            
+        });
+    </script>
+</body>
+</html>
